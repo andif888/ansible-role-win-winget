@@ -1,0 +1,33 @@
+---
+# defaults file for ansible-role-win-winget
+
+# @var winget_extract_dir:description: extract directory
+winget_extract_dir: 'C:\windows\temp\winget_extract'
+
+# @var winget_microsoft_ui_xaml_major_version:description: Microsoft.UI.Xaml major version
+winget_microsoft_ui_xaml_major_version: "2.7"
+
+# @var winget_microsoft_ui_xaml_version:description: Microsoft.UI.Xaml version
+winget_microsoft_ui_xaml_version: "{{ winget_microsoft_ui_xaml_major_version }}.3"
+
+# @var winget_microsoft_ui_xaml_download_url:description: Microsoft.UI.Xaml downlaod url
+winget_microsoft_ui_xaml_download_url: "https://www.nuget.org/api/v2/package/Microsoft.UI.Xaml/{{ winget_microsoft_ui_xaml_version }}"
+
+# @var winget_microsoft_vclibs_version:description: Microsoft VCLibs version
+winget_microsoft_vclibs_version: "14.00"
+
+# @var winget_microsoft_vclibs_download_url:description: Microsoft VCLibs download url
+winget_microsoft_vclibs_download_url: "https://aka.ms/Microsoft.VCLibs.x64.{{ winget_microsoft_vclibs_version }}.Desktop.appx"
+
+# @var winget_cli_version:description: winget cli version
+winget_cli_version: "1.4.10173"
+
+# @var winget_cli_download_url:description: winget cli download url
+winget_cli_download_url: "https://github.com/microsoft/winget-cli/releases/download/v{{ winget_cli_version }}/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle"
+
+# @var winget_cli_license_url:description: winget cli license url
+winget_cli_license_url: "https://github.com/microsoft/winget-cli/releases/download/v{{ winget_cli_version }}/3463fe9ad25e44f28630526aa9ad5648_License1.xml"
+
+# @var winget_download_validate_certs:description: validate ssl certificates
+winget_download_validate_certs: true
+...

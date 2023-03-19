@@ -1,0 +1,93 @@
+---
+# tasks file for ansible-role-win-winget
+# - name: Add a PowerShell module NTObjectManager for Server 2019
+#   community.windows.win_psmodule:
+#     name: NTObjectManager
+#     accept_license: true
+#     skip_publisher_check: true
+#     state: present
+#   when: '"Server 2019" in ansible_os_name'
+
+- name: Make sure extract directory exist
+  ansible.windows.win_file:
+    path: '{{ winget_extract_dir }}'
+    state: directory
+
+- name: Download Microsoft.UI.Xaml
+  ansible.windows.win_get_url:
+    url: "{{ winget_microsoft_ui_xaml_download_url }}"
+    dest: '{{ winget_extract_dir }}\microsoft_ui_xaml.zip'
+    force: yes
+    validate_certs: "{{ winget_download_validate_certs }}"
+
+- name: Download VCLibs
+  ansible.windows.win_get_url:
+    url: "{{ winget_microsoft_vclibs_download_url }}"
+    dest: '{{ winget_extract_dir }}\microsoft_vclibs.appx'
+    force: no
+    validate_certs: "{{ winget_download_validate_certs }}"
+
+- name: Download winget cli
+  ansible.windows.win_get_url:
+    url: "{{ winget_cli_download_url }}"
+    dest: '{{ winget_extract_dir }}\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle'
+    force: no
+    validate_certs: "{{ winget_download_validate_certs }}"
+
+- name: Download winget cli license
+  ansible.windows.win_get_url:
+    url: "{{ winget_cli_license_url }}"
+    dest: '{{ winget_extract_dir }}\3463fe9ad25e44f28630526aa9ad5648_License1.xml'
+    force: no
+    validate_certs: "{{ winget_download_validate_certs }}"
+
+- name: Extract Microsoft.UI.Xaml
+  community.windows.win_unzip:
+    src: '{{ winget_extract_dir }}\microsoft_ui_xaml.zip'
+    dest: '{{ winget_extract_dir }}\microsoft_ui_xaml\'    
+
+- name: Install Microsoft.UI.Xaml
+  ansible.builtin.win_shell: |
+    Add-AppxProvisionedPackage -Online -PackagePath .\microsoft_ui_xaml\tools\AppX\x64\Release\Microsoft.UI.Xaml.{{ winget_microsoft_ui_xaml_major_version }}.appx -SkipLicense
+  args:
+    chdir: '{{ winget_extract_dir }}'
+  register: winget_install_microsoft_ui_xaml_result
+
+- name: Debug winget_install_microsoft_ui_xaml_result
+  ansible.builtin.debug:
+    var: winget_install_microsoft_ui_xaml_result
+
+- name: Install VCLibs
+  ansible.builtin.win_shell: |
+    Add-AppxProvisionedPackage -Online -PackagePath .\microsoft_vclibs.appx -SkipLicense
+  args:
+    chdir: '{{ winget_extract_dir }}'
+  register: winget_install_vclibs_result
+
+- name: Debug winget_install_vclibs_result
+  ansible.builtin.debug:
+    var: winget_install_vclibs_result
+
+- name: Install winget
+  ansible.builtin.win_shell: |
+    Add-AppxProvisionedPackage -Online -PackagePath .\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle -LicensePath .\3463fe9ad25e44f28630526aa9ad5648_License1.xml -Verbose
+  args:
+    chdir: '{{ winget_extract_dir }}'
+  register: winget_install_result
+
+- name: Debug winget_install_result
+  ansible.builtin.debug:
+    var: winget_install_result
+
+# - name: Set-ExecutionAlias for Server 2019
+#   ansible.builtin.win_shell: |
+#     Import-Module  'NTObjectManager'
+#     Set-ExecutionAlias `
+#     -Path "$env:windir\winget.exe" `
+#     -Target $((Get-AppxPackage *DesktopAppInstaller*).InstallLocation + '\winget.exe') `
+#     -PackageName 'Microsoft.DesktopAppInstaller_8wekyb3d8bbwe' `
+#     -AppType Desktop `
+#     -EntryPoint 'Microsoft.DesktopAppInstaller_8wekyb3d8bbwe!winget' `
+#     -Version 3
+#   when: '"Server 2019" in ansible_os_name'
+...
