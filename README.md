@@ -6,7 +6,9 @@ Role to install winget for Windows 10, 11 and Server 2022
 
 - [Default Variables](#default-variables)
   - [winget_cli_download_url](#winget_cli_download_url)
+  - [winget_cli_license_filename](#winget_cli_license_filename)
   - [winget_cli_license_url](#winget_cli_license_url)
+  - [winget_cli_msixbundle_filename](#winget_cli_msixbundle_filename)
   - [winget_cli_version](#winget_cli_version)
   - [winget_download_validate_certs](#winget_download_validate_certs)
   - [winget_extract_dir](#winget_extract_dir)
@@ -31,7 +33,15 @@ winget cli download url
 
 ```YAML
 winget_cli_download_url: https://github.com/microsoft/winget-cli/releases/download/v{{
-  winget_cli_version }}/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle
+  winget_cli_version }}/{{ winget_cli_msixbundle_filename }}
+```
+
+### winget_cli_license_filename
+
+#### Default value
+
+```YAML
+winget_cli_license_filename: 3463fe9ad25e44f28630526aa9ad5648_License1.xml
 ```
 
 ### winget_cli_license_url
@@ -42,7 +52,15 @@ winget cli license url
 
 ```YAML
 winget_cli_license_url: https://github.com/microsoft/winget-cli/releases/download/v{{
-  winget_cli_version }}/3463fe9ad25e44f28630526aa9ad5648_License1.xml
+  winget_cli_version }}/{{ winget_cli_license_filename }}
+```
+
+### winget_cli_msixbundle_filename
+
+#### Default value
+
+```YAML
+winget_cli_msixbundle_filename: Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle
 ```
 
 ### winget_cli_version

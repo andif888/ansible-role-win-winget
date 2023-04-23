@@ -30,14 +30,14 @@
 - name: Download winget cli
   ansible.windows.win_get_url:
     url: "{{ winget_cli_download_url }}"
-    dest: '{{ winget_extract_dir }}\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle'
+    dest: '{{ winget_extract_dir }}\{{ winget_cli_msixbundle_filename }}'
     force: no
     validate_certs: "{{ winget_download_validate_certs }}"
 
 - name: Download winget cli license
   ansible.windows.win_get_url:
     url: "{{ winget_cli_license_url }}"
-    dest: '{{ winget_extract_dir }}\3463fe9ad25e44f28630526aa9ad5648_License1.xml'
+    dest: '{{ winget_extract_dir }}\{{ winget_cli_license_filename }}'
     force: no
     validate_certs: "{{ winget_download_validate_certs }}"
 
@@ -70,7 +70,7 @@
 
 - name: Install winget
   ansible.builtin.win_shell: |
-    Add-AppxProvisionedPackage -Online -PackagePath .\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle -LicensePath .\3463fe9ad25e44f28630526aa9ad5648_License1.xml -Verbose
+    Add-AppxProvisionedPackage -Online -PackagePath .\{{ winget_cli_msixbundle_filename }} -LicensePath .\{{ winget_cli_license_filename }} -Verbose
   args:
     chdir: '{{ winget_extract_dir }}'
   register: winget_install_result
