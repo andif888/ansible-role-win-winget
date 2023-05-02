@@ -18,28 +18,44 @@
     url: "{{ winget_microsoft_ui_xaml_download_url }}"
     dest: '{{ winget_extract_dir }}\microsoft_ui_xaml.zip'
     force: yes
-    validate_certs: "{{ winget_download_validate_certs }}"
+    validate_certs: '{{ validate_certs | default(omit) }}'
+    proxy_password: '{{ proxy_password | default(omit) }}'
+    proxy_url : '{{ proxy_url  | default(omit) }}'
+    proxy_use_default_credential: '{{ use_default_credential | default(omit) }}'
+    proxy_username: '{{ proxy_username | default(omit) }}'
 
 - name: Download VCLibs
   ansible.windows.win_get_url:
     url: "{{ winget_microsoft_vclibs_download_url }}"
     dest: '{{ winget_extract_dir }}\microsoft_vclibs.appx'
     force: no
-    validate_certs: "{{ winget_download_validate_certs }}"
+    validate_certs: '{{ validate_certs | default(omit) }}'
+    proxy_password: '{{ proxy_password | default(omit) }}'
+    proxy_url : '{{ proxy_url  | default(omit) }}'
+    proxy_use_default_credential: '{{ use_default_credential | default(omit) }}'
+    proxy_username: '{{ proxy_username | default(omit) }}'
 
 - name: Download winget cli
   ansible.windows.win_get_url:
     url: "{{ winget_cli_download_url }}"
     dest: '{{ winget_extract_dir }}\{{ winget_cli_msixbundle_filename }}'
     force: no
-    validate_certs: "{{ winget_download_validate_certs }}"
+    validate_certs: '{{ validate_certs | default(omit) }}'
+    proxy_password: '{{ proxy_password | default(omit) }}'
+    proxy_url : '{{ proxy_url  | default(omit) }}'
+    proxy_use_default_credential: '{{ use_default_credential | default(omit) }}'
+    proxy_username: '{{ proxy_username | default(omit) }}'
 
 - name: Download winget cli license
   ansible.windows.win_get_url:
     url: "{{ winget_cli_license_url }}"
     dest: '{{ winget_extract_dir }}\{{ winget_cli_license_filename }}'
     force: no
-    validate_certs: "{{ winget_download_validate_certs }}"
+    validate_certs: '{{ validate_certs | default(omit) }}'
+    proxy_password: '{{ proxy_password | default(omit) }}'
+    proxy_url : '{{ proxy_url  | default(omit) }}'
+    proxy_use_default_credential: '{{ use_default_credential | default(omit) }}'
+    proxy_username: '{{ proxy_username | default(omit) }}'
 
 - name: Extract Microsoft.UI.Xaml
   community.windows.win_unzip:

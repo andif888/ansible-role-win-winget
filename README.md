@@ -10,7 +10,6 @@ Role to install winget for Windows 10, 11 and Server 2022
   - [winget_cli_license_url](#winget_cli_license_url)
   - [winget_cli_msixbundle_filename](#winget_cli_msixbundle_filename)
   - [winget_cli_version](#winget_cli_version)
-  - [winget_download_validate_certs](#winget_download_validate_certs)
   - [winget_extract_dir](#winget_extract_dir)
   - [winget_microsoft_ui_xaml_download_url](#winget_microsoft_ui_xaml_download_url)
   - [winget_microsoft_ui_xaml_major_version](#winget_microsoft_ui_xaml_major_version)
@@ -71,16 +70,6 @@ winget cli version
 
 ```YAML
 winget_cli_version: 1.4.10173
-```
-
-### winget_download_validate_certs
-
-validate ssl certificates
-
-#### Default value
-
-```YAML
-winget_download_validate_certs: true
 ```
 
 ### winget_extract_dir
