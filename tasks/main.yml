@@ -95,6 +95,17 @@
   ansible.builtin.debug:
     var: winget_install_result
 
+- name: Install winget user
+  ansible.builtin.win_shell: |
+    Add-AppxPackage -Path .\{{ winget_cli_msixbundle_filename }} -Verbose
+  args:
+    chdir: '{{ winget_extract_dir }}'
+  register: winget_installuser_result
+
+- name: Debug winget_installuser_result
+  ansible.builtin.debug:
+    var: winget_installuser_result
+
 # - name: Set-ExecutionAlias for Server 2019
 #   ansible.builtin.win_shell: |
 #     Import-Module  'NTObjectManager'
