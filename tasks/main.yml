@@ -79,6 +79,7 @@
   args:
     chdir: '{{ winget_extract_dir }}'
   register: winget_install_vclibs_result
+  ignore_errors: "{{ winget_microsoft_vclibs_ignore_install_error }}"
 
 - name: Debug winget_install_vclibs_result
   ansible.builtin.debug:

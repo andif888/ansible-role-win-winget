@@ -33,4 +33,6 @@ winget_cli_download_url: "https://github.com/microsoft/winget-cli/releases/downl
 
 # @var winget_cli_license_url:description: winget cli license url
 winget_cli_license_url: "https://github.com/microsoft/winget-cli/releases/download/v{{ winget_cli_version }}/{{ winget_cli_license_filename }}"
+
+winget_microsoft_vclibs_ignore_install_error: false
 ...
